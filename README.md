@@ -13,7 +13,7 @@ The absence of any primary keys other than widely varying names makes it very di
 ## 2. Regex Solution
 To overcome the above issues, I created a simple R function based on regex. It takes a raw vector of russian regions as an input and produces corresponding vector of primary keys. It consists of two obligatory arguments:
 1. `russian_regions` — a vector input, that takes raw names of Russian regions from your data;
-2. `code` — a character/string, that indicates which primary key you want to get. Currently could be either "[ISO_3166_2](https://www.iso.org/obp/ui/#iso:code:3166:RU)" or "[GOST_7_67](https://protect.gost.ru/document.aspx?control=7&id=129611)". The latter is Latin 3-letter version.
+2. `code` — a character/string, that indicates which primary key you want to get. Currently could be either "[ISO_3166_2](https://www.iso.org/obp/ui/#iso:code:3166:RU)" or "[GOST_7_67](https://protect.gost.ru/document.aspx?control=7&id=129611)". The latter one is Latin 3-letter version.
 
 Quick illustration of functionality:
 
