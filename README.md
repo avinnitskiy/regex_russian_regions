@@ -6,7 +6,8 @@ Russian regional data often does not include any primary keys for each region wi
 * Federal cities: "г. Москва" vs "Москва";
 * Presence of republic status and its order: "Чечня" vs "Чеченская республика" vs "Республика Чечня";
 * Co-existing of Russian and indigenous names: "Якутия" vs "Саха";
-* Informal/nonofficial and official names: "Башкирия" vs "Башкортостан" .
+* Informal/nonofficial and official names: "Башкирия" vs "Башкортостан".
+
 The absence of any primary keys other than widely varying names makes it very difficult for researchers to analyze the data. Especially when work requires merging either several regional level datasets or individual-level dataset containing regional attributes for each respondent. In both cases, you have to ad hoc bring the names to uniformity, even if you use the string distance (for example, the Levenshtein distance between the "Omsk region" and the "Tomsk region" is 1).
 
 ## 2. Regex Solution
