@@ -8,7 +8,7 @@ Russian regional data often does not include any primary keys for each region wi
 * Co-existing of Russian and indigenous names: "Якутия" vs "Саха";
 * Informal/nonofficial and official names: "Башкирия" vs "Башкортостан".
 
-The absence of any primary keys other than widely varying names makes it very difficult for researchers to analyze the data. Especially when work requires merging either several regional level datasets or individual-level dataset containing regional attributes for each respondent. In both cases, you have to ad hoc bring the names to uniformity, even if you use the string distance (for example, the Levenshtein distance between the "Omsk region" and the "Tomsk region" is 1).
+The absence of any primary keys other than widely varying names makes it very difficult for researchers to analyze the data. Especially when work requires merging either several regional-level datasets or individual-level dataset containing regional attributes for each respondent. In both cases, you have to ad hoc bring the names to uniformity, even if you use the string distance (for example, the Levenshtein distance between the "Omsk region" and the "Tomsk region" is 1).
 
 ## 2. Regex Solution
 To overcome the above issues, I created a simple R function based on regex. It takes a raw vector of Russian regions as an input and produces corresponding vector of primary keys. It consists of two obligatory arguments:
