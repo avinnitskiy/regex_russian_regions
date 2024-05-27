@@ -123,10 +123,8 @@ russian_regions_raw <- c("г. Москва", "Санкт-Петербург", "�
                          "ХМАО", "Саха", "Якутия", "Крым", "Читинская область",  
                          "Российская Федерация", "Северо-Кавказский федеральный округ")
 
-primary_keys_iso <- get_regional_id(russian_regions_raw, 
-                                    code = "ISO_3166_2")
+primary_keys_iso <- get_regional_id(russian_regions_raw, code = "ISO_3166_2")
 primary_keys_iso
 
-primary_keys_gost <- get_regional_id(russian_regions_raw, 
-                                    code = "GOST_7_67")
+primary_keys_gost <- get_regional_id(russian_regions_raw, code = "GOST_7_67")
 primary_keys_gost
