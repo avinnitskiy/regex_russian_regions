@@ -50,7 +50,7 @@ get_regional_id <- function(russian_regions, code) {
                      "\\D*Вологодск\\D*" = c("RU-VLG", "RU-VLG"),
                      "\\D*Воронежск\\D*" = c("RU-VOR", "RU-VOR"),
                      "\\D*Ивановск\\D*" = c("RU-IVA", "RU-IVA"),
-                     "\\D*Иркутск\\D*" = c("RU-IRK", "	RU-IRK"),
+                     "\\D*Иркутск\\D*" = c("RU-IRK", "RU-IRK"),
                      "\\D*Калининградск\\D*" = c("RU-KGD", "RU-KAG"),
                      "\\D*Калужск\\D*" = c("RU-KLU", "RU-KLU"),
                      "\\D*Кемеровск\\D*|\\D*Кузбас\\D*" = c("RU-KEM", "RU-KEM"),
