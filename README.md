@@ -2,7 +2,7 @@
 An R regex function that creates primary keys for Russian regions.
 
 ## 1. Issue
-Russian regional data often does not include any primary keys for each region with the exeption of their names. At the same time, the names of Russian regions vary no less often from dataset to dataset. For example, there are several common diffusions in naming of the same region: 
+Russian regional data often does not include any primary keys for each region with the exception of their names. At the same time, the names of Russian regions vary no less often from dataset to dataset. For example, there are several common diffusions in naming of the same region: 
 * Federal cities: "г. Москва" vs "Москва";
 * Presence of republic status and its order: "Чечня" vs "Чеченская республика" vs "Республика Чечня";
 * Co-existing of Russian and indigenous names: "Якутия" vs "Саха";
