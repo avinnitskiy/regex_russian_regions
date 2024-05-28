@@ -105,12 +105,12 @@ def get_regional_id(russian_regions, code):
                   "\\D*Ямало\\D*|^ЯНАО$": ["RU-YAN", "RU-YAN"]
                   }
 
-    regex_dict_df = pd.DataFrame.from_dict(regex_dict, orient='index', columns=['ISO_3166_2', 'GOST_7_67']).reset_index()
+    regex_dict_df = pd.DataFrame.from_dict(regex_dict, orient = 'index', columns = ['ISO_3166_2', 'GOST_7_67']).reset_index()
     regex_dict_df.columns = ['regex_pattern', 'ISO_3166_2', 'GOST_7_67']
 
-    output_vec = russian_regions.replace(regex_dict_df.set_index('regex_pattern')['ISO_3166_2'].to_dict(), regex = True)
+    output_vec = russian_regions.replace(regex_dict_df.set_index('regex_pattern')[code].to_dict(), regex = True)
     
-    output_vec = output_vec.where(output_vec.isin(regex_dict_df['ISO_3166_2']), other = None)
+    output_vec = output_vec.where(output_vec.isin(regex_dict_df[code]), other = None)
     
     return output_vec
 
