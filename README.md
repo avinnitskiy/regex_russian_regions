@@ -1,5 +1,5 @@
 # Regex for Russian Regions (RRR)
-An R regex function that creates primary keys for Russian regions.
+An R and Python regex function that creates primary keys for Russian regions.
 
 ## 1. Issue
 Russian regional data often does not include any primary keys for each region with the exception of their names. At the same time, the names of Russian regions vary no less often from dataset to dataset. For example, there are several common diffusions in naming of the same region: 
@@ -11,11 +11,11 @@ Russian regional data often does not include any primary keys for each region wi
 The absence of any primary keys other than widely varying names makes it very difficult for researchers to analyze the data. Especially when work requires merging either several regional-level datasets or individual-level dataset containing regional attributes for each respondent. In both cases, you have to ad hoc bring the names to uniformity, even if you use the string distance (for example, the Levenshtein distance between the "Omsk region" and the "Tomsk region" is 1).
 
 ## 2. Regex Solution
-To overcome the above issues, I created a simple R function based on regex. It takes a raw vector of Russian regions as an input and produces corresponding vector of primary keys. It consists of two obligatory arguments:
+To overcome the above issues, I created a simple function based on regex — `get_regional_id()`. It takes a raw vector of Russian regions as an input and produces corresponding vector of primary keys. It consists of two obligatory arguments:
 1. `russian_regions` — a vector input, that takes raw names of Russian regions from your data;
 2. `code` — a character/string, that indicates which primary key you want to get. Currently could be either "[ISO_3166_2](https://www.iso.org/obp/ui/#iso:code:3166:RU)" or "[GOST_7_67](https://protect.gost.ru/document.aspx?control=7&id=129611)". The latter one is Latin 3-letter version.
 
-Quick illustration of functionality:
+Quick illustration of functionality in R:
 
 ```r
 russian_regions_raw <- c("г. Москва", "Санкт-Петербург", "Башкирия", 
@@ -47,6 +47,6 @@ If you found any issue/inconsistency/way to improve regarding regex or anything,
 
 ## 4. Plans to do
 * [ ] Create an English-version regex for merging with [geoBoundaries](https://www.geoboundaries.org/) and international data;
-* [ ] Create a Python-compatible version;
+* [x] Create a Python-compatible version;
 * [ ] Add scripts with testing;
 * [ ] Add other primary keys to facilitate merging with data that does not contain the names of regions (for example, "ОКАТО").
