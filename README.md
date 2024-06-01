@@ -13,7 +13,7 @@ The absence of any primary keys other than widely varying names makes it very di
 ## 2. Regex Solution
 To overcome the above issues, I created a simple function based on regex — `get_regional_id()`. It takes a raw vector of Russian regions as an input and produces corresponding vector of primary keys. It consists of two obligatory arguments:
 1. `russian_regions` — a vector input, that takes raw names of Russian regions from your data;
-2. `code` — a character/string, that indicates which primary key you want to get. Currently could be either "[ISO_3166_2](https://www.iso.org/obp/ui/#iso:code:3166:RU)" or "[GOST_7_67](https://protect.gost.ru/document.aspx?control=7&id=129611)". The latter one is Latin 3-letter version. "OKATO" was also added as an argument and key (currently for R function only).
+2. `code` — a character/string, that indicates which primary key you want to get. Currently could be either "[ISO_3166_2](https://www.iso.org/obp/ui/#iso:code:3166:RU)", "[GOST_7_67](https://protect.gost.ru/document.aspx?control=7&id=129611)", or "[OKATO](https://classifikators.ru/okato)". The "GOST_7_67" is Latin 3-letter version.
 
 Quick illustration of functionality in R:
 
@@ -29,6 +29,10 @@ primary_keys_iso
 primary_keys_gost <- get_regional_id(russian_regions_raw, code = "GOST_7_67")
 primary_keys_gost
 # [1] "RU-MOW" "RU-SPB" "RU-BAS" "RU-KHM" "RU-SAH" "RU-SAH" "RU-CRI*" "RU-CHI" NA NA
+
+primary_keys_okato <- get_regional_id(russian_regions_raw, code = "OKATO")
+primary_keys_okato
+# [1] "45" "40" "80" "71100" "98" "98" "35" "76" NA NA
 ```
 
 The basis of the function is a dictionary with a pair of key (regex-pattern) - value (code-ids). In the keys, the regions follow the order prescribed in the Constitution of the Russian Federation — that is, according to the administrative-territorial hierarchy (republics $\to$ krais $\to$ oblasts $\to$ federal cities $\to$ autonomous oblast $\to$ autonomous okrugs). Within each administrative unit, regions are sorted alphabetically, while the administrative-territorial division is ignored in alphabetical order.
@@ -49,4 +53,4 @@ If you found any issue/inconsistency/way to improve regarding regex or anything,
 * [ ] Create an English-version regex for merging with [geoBoundaries](https://www.geoboundaries.org/) and international data;
 * [x] Create a Python-compatible version;
 * [ ] Add scripts with testing;
-* [ ] Add other primary keys to facilitate merging with data that does not contain the names of regions (for example, "ОКАТО").
+* [x] Add other primary keys to facilitate merging with data that does not contain the names of regions (for example, "OKATO").
