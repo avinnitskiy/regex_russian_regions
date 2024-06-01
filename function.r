@@ -32,10 +32,10 @@ get_regional_id <- function(russian_regions, code) {
                      # krais / administrative territories
                      "\\D*Алтайск\\D*" = c("RU-ALT", "RU-ALT", "01"),
                      "\\D*Забайкальск\\D*" = c("RU-ZAB", "RU-ZAB", "76"),
-                     "\\D*Камчат\\D*" = c("RU-KAM", "RU-KAM", "30"),
+                     "\\D*Камчатск\\D*кра\\D*" = c("RU-KAM", "RU-KAM", "30"),
                      "\\D*Краснодар\\D*" = c("RU-KDA", "RU-KRA", "03"),
                      "\\D*Красноярск\\D*" = c("RU-KYA", "RU-KYA", "04"),
-                     "\\D*Пермск\\D*" = c("RU-PER", "RU-PER", "57"),
+                     "\\D*Пермск\\D*край\\D*" = c("RU-PER", "RU-PER", "57"),
                      "\\D*Примор\\D*" = c("RU-PRI", "RU-PRI", "05"),
                      "\\D*Ставрополь\\D*" = c("RU-STA", "RU-STA", "07"),
                      "\\D*Хабаровск\\D*" = c("RU-KHA", "RU-KHA", "08"),
@@ -53,6 +53,7 @@ get_regional_id <- function(russian_regions, code) {
                      "\\D*Иркутск\\D*" = c("RU-IRK", "RU-IRK", "25"),
                      "\\D*Калининградск\\D*" = c("RU-KGD", "RU-KAG", "27"),
                      "\\D*Калужск\\D*" = c("RU-KLU", "RU-KLU", "29"),
+                     "\\D*Камчатск\\D*обл\\D*" = c("RU-KAM", "RU-KAM", "30"),
                      "\\D*Кемеровск\\D*|\\D*Кузбас\\D*" = c("RU-KEM", "RU-KEM", "32"),
                      "\\D*Кировск\\D*" = c("RU-KIR", "RU-KIR", "33"),
                      "\\D*Костромск\\D*" = c("RU-KOS", "RU-KOS", "34"),
@@ -70,6 +71,7 @@ get_regional_id <- function(russian_regions, code) {
                      "\\D*Оренбург\\D*" = c("RU-ORE", "RU-ORE", "53"),
                      "\\D*Орловск\\D*" = c("RU-ORL", "RU-ORL", "54"),
                      "\\D*Пензенск\\D*" = c("RU-PNZ", "RU-PNZ", "56"),
+                     "\\D*Пермск\\D*обл\\D*" = c("RU-PER", "RU-PER", "57"),
                      "\\D*Псковск\\D*" = c("RU-PSK", "RU-PSK", "58"),
                      "\\D*Ростовск\\D*" = c("RU-ROS", "RU-ROS", "60"),
                      "\\D*Рязанск\\D*" = c("RU-RYA", "RU-RYA", "61"),
@@ -107,7 +109,8 @@ get_regional_id <- function(russian_regions, code) {
     as_tibble() |>
     t() |>
     as.data.frame() |>
-    setNames(c("ISO_3166_2", "GOST_7_67", "OKATO"))
+    setNames(c("ISO_3166_2", "GOST_7_67", "OKATO")) %>%
+    mutate("alphabetic_id" = as.character(1:nrow(.)))
   
   output_vec <- str_replace_all(russian_regions, 
                                 setNames(regex_dict[, code], rownames(regex_dict)))
@@ -121,7 +124,9 @@ get_regional_id <- function(russian_regions, code) {
 # 3. Execution example
 russian_regions_raw <- c("г. Москва", "Санкт-Петербург", "Башкирия", 
                          "ХМАО", "Саха", "Якутия", "Крым", "Читинская область",  
-                         "Российская Федерация", "Северо-Кавказский федеральный округ")
+                         "Российская Федерация", "Северо-Кавказский федеральный округ", 
+                         "Камчатский край", "Камчатская область",
+                         "Пермская область", "Пермский край")
 
 primary_keys_iso <- get_regional_id(russian_regions_raw, code = "ISO_3166_2")
 primary_keys_iso
@@ -131,3 +136,6 @@ primary_keys_gost
 
 primary_keys_okato <- get_regional_id(russian_regions_raw, code = "OKATO")
 primary_keys_okato
+
+primary_keys_alph <- get_regional_id(russian_regions_raw, code = "alphabetic_id")
+primary_keys_alph

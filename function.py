@@ -30,10 +30,10 @@ def get_regional_id(russian_regions, code):
                   # krais / administrative territories
                   r"\D*Алтайск\D*": ["RU-ALT", "RU-ALT", "01"],
                   r"\D*Забайкальск\D*": ["RU-ZAB", "RU-ZAB", "76"],
-                  r"\D*Камчат\D*": ["RU-KAM", "RU-KAM", "30"],
+                  r"\D*Камчатск\D*кра\D*": ["RU-KAM", "RU-KAM", "30"],
                   r"\D*Краснодар\D*": ["RU-KDA", "RU-KRA", "03"],
                   r"\D*Красноярск\D*": ["RU-KYA", "RU-KYA", "04"],
-                  r"\D*Пермск\D*": ["RU-PER", "RU-PER", "57"],
+                  r"\D*Пермск\D*край\D*": ["RU-PER", "RU-PER", "57"],
                   r"\D*Примор\D*": ["RU-PRI", "RU-PRI", "05"],
                   r"\D*Ставрополь\D*": ["RU-STA", "RU-STA", "07"],
                   r"\D*Хабаровск\D*": ["RU-KHA", "RU-KHA", "08"],
@@ -51,6 +51,7 @@ def get_regional_id(russian_regions, code):
                   r"\D*Иркутск\D*": ["RU-IRK", "RU-IRK", "25"],
                   r"\D*Калининградск\D*": ["RU-KGD", "RU-KAG", "27"],
                   r"\D*Калужск\D*": ["RU-KLU", "RU-KLU", "29"],
+                  r"\D*Камчатск\D*обл\D*": ["RU-KAM", "RU-KAM", "30"],
                   r"\D*Кемеровск\D*|\D*Кузбас\D*": ["RU-KEM", "RU-KEM", "32"],
                   r"\D*Кировск\D*": ["RU-KIR", "RU-KIR", "33"],
                   r"\D*Костромск\D*": ["RU-KOS", "RU-KOS", "34"],
@@ -63,11 +64,12 @@ def get_regional_id(russian_regions, code):
                   r"\D*Мурманск\D*": ["RU-MUR", "RU-MUR", "47"],
                   r"\D*Нижегородск\D*": ["RU-NIZ", "RU-NIZ", "22"],
                   r"\D*Новгородск\D*": ["RU-NGR", "RU-NGR", "49"],
-                  r"\\D*Новосибирск\D*": ["RU-NVS", "RU-NVS", "50"],
+                  r"\D*Новосибирск\D*": ["RU-NVS", "RU-NVS", "50"],
                   r"\D*Омск\D*": ["RU-OMS", "RU-OMS", "52"],
                   r"\D*Оренбург\D*": ["RU-ORE", "RU-ORE", "53"],
                   r"\D*Орловск\D*": ["RU-ORL", "RU-ORL", "54"],
                   r"\D*Пензенск\D*": ["RU-PNZ", "RU-PNZ", "56"],
+                  r"\D*Пермск\D*обл\D*": ["RU-PER", "RU-PER", "57"],
                   r"\D*Псковск\D*": ["RU-PSK", "RU-PSK", "58"],
                   r"\D*Ростовск\D*": ["RU-ROS", "RU-ROS", "60"],
                   r"\D*Рязанск\D*": ["RU-RYA", "RU-RYA", "61"],
@@ -103,9 +105,11 @@ def get_regional_id(russian_regions, code):
                   r"\D*Эвенкийск\D*": ["RU-EVE", "RU-EVE", "0413"], 
                   r"\D*Ямало\D*|^ЯНАО$": ["RU-YAN", "RU-YAN", "71140"]
                   }
-
+    
+    
     regex_dict_df = pd.DataFrame.from_dict(regex_dict, orient = 'index', columns = ['ISO_3166_2', 'GOST_7_67', 'OKATO']).reset_index()
-    regex_dict_df.columns = ['regex_pattern', 'ISO_3166_2', 'GOST_7_67', 'OKATO']
+    regex_dict_df["alphabetic_id"] = (regex_dict_df.index + 1).astype(str)
+    regex_dict_df.columns = ['regex_pattern', 'ISO_3166_2', 'GOST_7_67', 'OKATO', 'alph_id']
 
     output_vec = russian_regions.replace(regex_dict_df.set_index('regex_pattern')[code].to_dict(), regex = True)
     output_vec = output_vec.where(output_vec.isin(regex_dict_df[code]), other = None)
@@ -115,7 +119,9 @@ def get_regional_id(russian_regions, code):
 # 3. Execution example
 russian_regions_raw = ["г. Москва", "Санкт-Петербург", "Башкирия", 
                        "ХМАО", "Саха", "Якутия", "Крым", "Читинская область",  
-                       "Российская Федерация", "Северо-Кавказский федеральный округ"]
+                       "Российская Федерация", "Северо-Кавказский федеральный округ",
+                       "Камчатский край", "Камчатская область",
+                       "Пермская область", "Пермский край"]
 
 primary_keys_iso = get_regional_id(pd.Series(russian_regions_raw), code = "ISO_3166_2")
 print(primary_keys_iso)
@@ -125,3 +131,6 @@ print(primary_keys_gost)
 
 primary_keys_okato = get_regional_id(pd.Series(russian_regions_raw), code = "OKATO")
 print(primary_keys_okato)
+
+primary_keys_alph = get_regional_id(pd.Series(russian_regions_raw), code = "alphabetic_id")
+print(primary_keys_alph)
