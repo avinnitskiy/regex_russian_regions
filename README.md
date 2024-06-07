@@ -13,7 +13,7 @@ The absence of any primary keys other than widely varying names makes it very di
 ## 2. Regex Solution
 To overcome the above issues, I created a simple function based on regex — `get_regional_id()`. It takes a raw vector of Russian regions as an input and produces corresponding vector of primary keys. It consists of two obligatory arguments:
 1. `russian_regions` — a vector input, that takes raw names of Russian regions from your data;
-2. `code` — a character/string, that indicates which primary key you want to get. Currently could be either "[ISO_3166_2](https://www.iso.org/obp/ui/#iso:code:3166:RU)", "[GOST_7_67](https://protect.gost.ru/document.aspx?control=7&id=129611)", "[OKATO](https://classifikators.ru/okato)", or "alphabetic_id". The "GOST_7_67" is Latin 3-letter version. The "alphabetic_id" represents the order according to the Constitution (administrative-territorial, then alphabetical).
+2. `code` — a character/string, that indicates which primary key you want to get. Currently could be either "[ISO_3166_2](https://www.iso.org/obp/ui/#iso:code:3166:RU)", "[GOST_7_67](https://protect.gost.ru/document.aspx?control=7&id=129611)", "[OKATO](https://classifikators.ru/okato)", or "constitution_id". The "GOST_7_67" is Latin 3-letter version. The "constitution_id" represents the order according to the Constitution (administrative-territorial, then alphabetical).
 
 Quick illustration of functionality in R:
 
@@ -36,7 +36,7 @@ primary_keys_okato <- get_regional_id(russian_regions_raw, code = "OKATO")
 primary_keys_okato
 # [1] "45" "40" "80" "71100" "98" "98" "35" "76" NA NA "30" "30" "57" "57"   
 
-primary_keys_alph <- get_regional_id(russian_regions_raw, code = "alphabetic_id")
+primary_keys_alph <- get_regional_id(russian_regions_raw, code = "constitution_id")
 primary_keys_alph
 # [1] "81" "82" "3" "91" "15" "15" "12" "79" NA NA "25" "45" "63" "28"
 ```
@@ -46,7 +46,7 @@ The basis of the function is a dictionary with a pair of key (regex-pattern) - v
 ## 3. Limitations and testing
 Currently the function supports regional names only in Russian as an input. 
 
-It has been tested and robust to territorial changes since 1993 to the present. It does not take into account the Chechen-Ingush Republic, which ceased to exist in 1992, but takes into account 9 regions that existed before the unification reform (2005-2008): (1) "Камчатская область", (2) "Пермская область", (3) "Читинская область", (4) "Агинский Бурятский автономный округ", (5) "Коми-Пермяцкий автономный округ", (6) "Корякский автономный округ", (7) "Таймырский (Долгано-Ненецкий) автономный округ", (8) "Усть-Ордынский Бурятский автономный округ", (9) "Эвенкийский автономный округ". The dictionary does not contain new regions after 2022, but function can work with the old ones to the present. If you use the function with panel data that includes periods both before and after the unification of regions process, use the "alphabetic_id" code as the primary key. This is necessary because the codes of the ex-regions were passed on by their successors after the unification. As a result, in such panel data most of the codes are not unique keys. For example, (1) "Камчатский край" and "Камчатская область" (ex), (2) "Пермский край" and "Пермская область" (ex), (3) "Забайскальский край" and "Читинская область" (ex) have the same ISO 3166-2, GOST 7.67-2003, and OKATO. 
+It has been tested and robust to territorial changes since 1993 to the present. It does not take into account the Chechen-Ingush Republic, which ceased to exist in 1992, but takes into account 9 regions that existed before the unification reform (2005-2008): (1) "Камчатская область", (2) "Пермская область", (3) "Читинская область", (4) "Агинский Бурятский автономный округ", (5) "Коми-Пермяцкий автономный округ", (6) "Корякский автономный округ", (7) "Таймырский (Долгано-Ненецкий) автономный округ", (8) "Усть-Ордынский Бурятский автономный округ", (9) "Эвенкийский автономный округ". The dictionary does not contain new regions after 2022, but function can work with the old ones to the present. If you use the function with panel data that includes periods both before and after the unification of regions process, use the "constitution_id" code as the primary key. This is necessary because the codes of the ex-regions were passed on by their successors after the unification. As a result, in such panel data most of the codes are not unique keys. For example, (1) "Камчатский край" and "Камчатская область" (ex), (2) "Пермский край" and "Пермская область" (ex), (3) "Забайкальский край" and "Читинская область" (ex) have the same ISO 3166-2, GOST 7.67-2003, and OKATO. 
 
 The function is also resistant to situations where federal districts or the name of the country appear in the same column along with regions. 
 

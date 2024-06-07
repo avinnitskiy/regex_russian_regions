@@ -108,7 +108,7 @@ def get_regional_id(russian_regions, code):
     
     
     regex_dict_df = pd.DataFrame.from_dict(regex_dict, orient = 'index', columns = ['ISO_3166_2', 'GOST_7_67', 'OKATO']).reset_index()
-    regex_dict_df["alphabetic_id"] = (regex_dict_df.index + 1).astype(str)
+    regex_dict_df["constitution_id"] = (regex_dict_df.index + 1).astype(str)
     regex_dict_df.columns = ['regex_pattern', 'ISO_3166_2', 'GOST_7_67', 'OKATO', 'alph_id']
 
     output_vec = russian_regions.replace(regex_dict_df.set_index('regex_pattern')[code].to_dict(), regex = True)
@@ -132,5 +132,5 @@ print(primary_keys_gost)
 primary_keys_okato = get_regional_id(pd.Series(russian_regions_raw), code = "OKATO")
 print(primary_keys_okato)
 
-primary_keys_alph = get_regional_id(pd.Series(russian_regions_raw), code = "alphabetic_id")
+primary_keys_alph = get_regional_id(pd.Series(russian_regions_raw), code = "constitution_id")
 print(primary_keys_alph)

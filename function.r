@@ -1,6 +1,7 @@
 # 1. Loading libraries
 library(stringr)
 library(tibble)
+library(dplyr)
 
 # 2. Function creation
 get_regional_id <- function(russian_regions, code) {
@@ -110,7 +111,7 @@ get_regional_id <- function(russian_regions, code) {
     t() |>
     as.data.frame() |>
     setNames(c("ISO_3166_2", "GOST_7_67", "OKATO")) %>%
-    mutate("alphabetic_id" = as.character(1:nrow(.)))
+    mutate("constitution_id" = as.character(1:nrow(.)))
   
   output_vec <- str_replace_all(russian_regions, 
                                 setNames(regex_dict[, code], rownames(regex_dict)))
@@ -137,5 +138,5 @@ primary_keys_gost
 primary_keys_okato <- get_regional_id(russian_regions_raw, code = "OKATO")
 primary_keys_okato
 
-primary_keys_alph <- get_regional_id(russian_regions_raw, code = "alphabetic_id")
+primary_keys_alph <- get_regional_id(russian_regions_raw, code = "constitution_id")
 primary_keys_alph
