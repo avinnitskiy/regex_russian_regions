@@ -1,4 +1,4 @@
-# Regex for Russian Regions (RRR)
+﻿# Regex for Russian Regions (RRR)
 An R and Python regex function that creates primary keys for Russian regions.
 
 ## 1. Issue
@@ -48,7 +48,7 @@ Currently the function supports regional names only in Russian as an input.
 
 It has been tested and robust to territorial changes since 1993 to the present. It does not take into account the Chechen-Ingush Republic, which ceased to exist in 1992, but takes into account 9 regions that existed before the unification reform (2005-2008): (1) "Камчатская область", (2) "Пермская область", (3) "Читинская область", (4) "Агинский Бурятский автономный округ", (5) "Коми-Пермяцкий автономный округ", (6) "Корякский автономный округ", (7) "Таймырский (Долгано-Ненецкий) автономный округ", (8) "Усть-Ордынский Бурятский автономный округ", (9) "Эвенкийский автономный округ". The dictionary does not contain new regions after 2022, but function can work with the old ones to the present. If you use the function with panel data that includes periods both before and after the unification of regions process, use the "constitution_id" code as the primary key. This is necessary because the codes of the ex-regions were passed on by their successors after the unification. As a result, in such panel data some of the codes are not unique keys. For example, (1) "Камчатский край" and "Камчатская область" (ex), (2) "Пермский край" and "Пермская область" (ex), (3) "Забайкальский край" and "Читинская область" (ex) have the same ISO 3166-2, GOST 7.67-2003, and OKATO. 
 
-The function is also resistant to situations where federal districts or the name of the country appear in the same column along with regions. 
+The function is also resistant to situations where federal districts or the name of the country appear in the same column along with regions. In that case, it returns NA as shown above.
 
 The function was tested via [regex101](https://regex101.com/). In addition to, functionality was checked on three datasets containing popular Russian regional-level data:
 1. [Rosstat Census 2020 data](https://rosstat.gov.ru/vpn/2020);
